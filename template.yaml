@@ -75,6 +75,21 @@ Resources:
           Variables:
             TABLE_NAME: !Ref EmployeeTable
 
+  DeleteEmployeeFunction:
+      Type: AWS::Serverless::Function
+      Properties:
+        Handler: app.handler
+        CodeUri: src/delete-employee/
+        Policies:
+          - Version: "2012-10-17"
+            Statement:
+              - Effect: "Allow"
+                Action:
+                  - "dynamodb:DeleteItem"
+                Resource: !GetAtt EmployeeTable.Arn
+        Environment:
+          Variables:
+            TABLE_NAME: !Ref EmployeeTable
 
 
 Outputs:
@@ -87,5 +102,11 @@ Outputs:
   FetchEmployeesFunction:
     Description: "Fetch Employees Lambda Function ARN"
     Value: !GetAtt FetchEmployeesFunction.Arn
+  UpdateEmployeeFunction:
+    Description: "Update Employee Lambda Function ARN"
+    Value: !GetAtt UpdateEmployeeFunction.Arn
+  DeleteEmployeeFunction:
+    Description: "Delete Employee Lambda Function ARN"
+    Value: !GetAtt DeleteEmployeeFunction.Arn
 
 
