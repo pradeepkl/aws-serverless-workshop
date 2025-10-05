@@ -6,7 +6,7 @@ exports.handler = async (event, context) => {
     console.log("Event: ", event);
     console.log("Context: ", context);
     
-    const tableName = process.env.EMPLOYEE_TABLE;
+    const tableName = process.env.TABLE_NAME;
 
     for(let i=1; i<=100; i++) {
         const employee = {

@@ -17,7 +17,7 @@ Resources:
   EmployeeTable:
     Type: AWS::DynamoDB::Table
     Properties: 
-      TableName: Employee
+      TableName: Employees
       BillingMode: PAY_PER_REQUEST
       AttributeDefinitions: 
         - AttributeName: empId
