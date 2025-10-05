@@ -1,0 +1,39 @@
+so from morning
+lambda function
+dynamodb
+tables
+crud application
+
+
+
+expose these crud endpoints  to the end user via api gateway
+
+API gateway
+ - acts like an entry point to your application
+ - exposes endpoints to the end user
+ - routes the request to appropriate lambda function based on the endpoint (GET, POST, PUT, DELETE)
+ - supports authentication and authorization
+ - supports rate limiting and throttling
+ - supports caching
+ - can be integrated with route53 for custom domain names
+ - Interated with cloudwatch for logging and monitoring
+ - supports different environments (dev, test, prod) via staging deployments
+ - can be automatic deployement or manual deployement
+    - supports different types of APIs (REST, HTTP, WebSocket)
+ - Thre are two types of API gateway
+   - REST API
+      - older, more features, but more expensive and slower
+      - where we need to have more control over the request and response
+      - monolithic applications, complex applications, legacy applications, enterprise applications
+      - supports request and response transformations (mapping templates, xml, velocity templates)
+   - HTTP API (newer, cheaper, faster, but less features)   
+     - where we need to have less control over the request and response
+     - microservices, serverless applications, simple applications, modern applications
+        - supports only JSON
+        - does not support request and response transformations
+       - does not support caching
+       - monitoring and logging is limited
+       - suits your use case for most of the time without the overhead of REST API
+       - cheaper and faster
+       - supports OIDC and OAuth 2.0, JWT authorizers
+       - supports direct integrations with AWS services (lambda, step functions, kinesis, sns,sqs, etc)

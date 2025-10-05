@@ -14,6 +14,22 @@ Globals:
       - x86_64
   
 Resources:
+
+  MyHttpApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      StageName: dev
+      CorsConfiguration:
+        AllowMethods: 
+          - GET
+          - POST
+          - PUT
+          - DELETE
+        AllowOrigins: 
+          - "*"
+        AllowHeaders:
+          - "*"
+
   EmployeeTable:
     Type: AWS::DynamoDB::Table
     Properties: 
@@ -42,6 +58,13 @@ Resources:
       Environment:
         Variables:
           TABLE_NAME: !Ref EmployeeTable
+      Events:
+        SeedEmployees:
+          Type: HttpApi
+          Properties:
+            Method: POST
+            Path: /employees/seed
+            ApiId: !Ref MyHttpApi
 
   FetchEmployeesFunction:
     Type: AWS::Serverless::Function
@@ -58,6 +81,13 @@ Resources:
       Environment:
         Variables:
           TABLE_NAME: !Ref EmployeeTable
+      Events:
+        FetchEmployees:
+          Type: HttpApi
+          Properties:
+            Method: GET    
+            Path: /employees
+            ApiId: !Ref MyHttpApi
 
   UpdateEmployeeFunction:
       Type: AWS::Serverless::Function
@@ -74,6 +104,13 @@ Resources:
         Environment:
           Variables:
             TABLE_NAME: !Ref EmployeeTable
+        Events:
+          UpdateEmployee:
+            Type: HttpApi
+            Properties:
+              Method: PUT    
+              Path: /employees/{empId}
+              ApiId: !Ref MyHttpApi
 
   DeleteEmployeeFunction:
       Type: AWS::Serverless::Function
@@ -90,7 +127,13 @@ Resources:
         Environment:
           Variables:
             TABLE_NAME: !Ref EmployeeTable
-
+        Events:
+          DeleteEmployee:
+            Type: HttpApi
+            Properties:
+              Method: DELETE    
+              Path: /employees/{empId}
+              ApiId: !Ref MyHttpApi
 
 Outputs:
   EmployeeTableName:
@@ -108,5 +151,9 @@ Outputs:
   DeleteEmployeeFunction:
     Description: "Delete Employee Lambda Function ARN"
     Value: !GetAtt DeleteEmployeeFunction.Arn
+  MyHttpApiUrl:
+    Description: "API Gateway URL"
+    Value: !Sub "https://${MyHttpApi}.execute-api.${AWS::Region}.amazonaws.com/${MyHttpApi.Stage}"
+      
 
 
