@@ -22,10 +22,19 @@ exports.handler = async (event, context) => {
 
     try {
         const result = await client.send(new ScanCommand(params));
+
+        const sortedItems = result.Items.sort((a, b) => {
+            a.empId.S.localeCompare(b.empId.S);
+        });
+
+        console.log("Fetched items: ", sortedItems);
+        console.log("Last Evaluated Key: ", result.LastEvaluatedKey);
+
+
         return {
             statusCode: 200,
             body: JSON.stringify({
-                items: result.Items,
+                items: sortedItems,
                 lastKey: result.LastEvaluatedKey ? JSON.stringify(result.LastEvaluatedKey) : null,
             }),
         };
