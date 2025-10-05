@@ -23,6 +23,7 @@ exports.handler = async (event, context) => {
     try {
         const result = await client.send(new ScanCommand(params));
 
+        // Sort items by empId
         const sortedItems = result.Items.sort((a, b) => {
             a.empId.S.localeCompare(b.empId.S);
         });

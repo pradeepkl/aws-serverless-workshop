@@ -57,7 +57,25 @@ Resources:
               Resource: !GetAtt EmployeeTable.Arn
       Environment:
         Variables:
-          TABLE_NAME: !Ref EmployeeTable      
+          TABLE_NAME: !Ref EmployeeTable
+
+  UpdateEmployeeFunction:
+      Type: AWS::Serverless::Function
+      Properties:
+        Handler: app.handler
+        CodeUri: src/update-employee/
+        Policies:
+          - Version: "2012-10-17"
+            Statement:
+              - Effect: "Allow"
+                Action:
+                  - "dynamodb:UpdateItem"
+                Resource: !GetAtt EmployeeTable.Arn
+        Environment:
+          Variables:
+            TABLE_NAME: !Ref EmployeeTable
+
+
 
 Outputs:
   EmployeeTableName:
