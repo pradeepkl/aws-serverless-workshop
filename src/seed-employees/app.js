@@ -21,9 +21,9 @@ exports.handler = async (event, context) => {
         
         try {
             await client.send(command);
-            console.log(`Inserted: ${employee.id.S}`);
+            console.log(`Inserted: ${employee.empId.S}`);
         } catch (error) {
-            console.error(`Error inserting ${employee.id.S}: `, error);
+            console.error(`Error inserting ${employee.empId.S}: `, error);
         }
     }
     return {
