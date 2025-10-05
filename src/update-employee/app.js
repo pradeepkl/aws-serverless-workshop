@@ -1,4 +1,4 @@
-const {DynamoDBClient, PutItemCommand } = require("@aws-sdk/client-dynamodb");
+const {DynamoDBClient, UpdateItemCommand } = require("@aws-sdk/client-dynamodb");
 const client = new DynamoDBClient({ region: "ap-south-1" });
 
 exports.handler = async (event, context) => {
