@@ -4,6 +4,14 @@ Description: >
   dynamodb-crud-app
 
   Sample SAM Template for dynamodb-crud-app
+
+Globals:
+  Function:
+    Timeout: 10
+    Runtime: nodejs22.x
+    MemorySize: 128
+    Architectures:
+      - x86_64
   
 Resources:
   EmployeeTable:
@@ -19,9 +27,28 @@ Resources:
           KeyType: HASH
     DeletionPolicy: Delete
 
+  SeedEmployeesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: app.handler
+      CodeUri: src/seed-employees/
+      Policies:
+        - Version: "2012-10-17"
+          Statement:
+            - Effect: "Allow"
+              Action:
+                - "dynamodb:PutItem"
+              Resource: !GetAtt EmployeeTable.Arn
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref EmployeeTable
+
 Outputs:
   EmployeeTableName:
     Description: "Employee Table Name"
     Value: !Ref EmployeeTable
-  
+  SeedEmployeesFunction:
+    Description: "Seed Employees Lambda Function ARN"
+    Value: !GetAtt SeedEmployeesFunction.Arn
+
 
