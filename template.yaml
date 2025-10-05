@@ -43,6 +43,22 @@ Resources:
         Variables:
           TABLE_NAME: !Ref EmployeeTable
 
+  FetchEmployeesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: app.handler
+      CodeUri: src/fetch-employees/
+      Policies:
+        - Version: "2012-10-17"
+          Statement:
+            - Effect: "Allow"
+              Action:
+                - "dynamodb:Scan"
+              Resource: !GetAtt EmployeeTable.Arn
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref EmployeeTable      
+
 Outputs:
   EmployeeTableName:
     Description: "Employee Table Name"
@@ -50,5 +66,8 @@ Outputs:
   SeedEmployeesFunction:
     Description: "Seed Employees Lambda Function ARN"
     Value: !GetAtt SeedEmployeesFunction.Arn
+  FetchEmployeesFunction:
+    Description: "Fetch Employees Lambda Function ARN"
+    Value: !GetAtt FetchEmployeesFunction.Arn
 
 
