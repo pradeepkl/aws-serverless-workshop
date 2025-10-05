@@ -1,0 +1,27 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  dynamodb-crud-app
+
+  Sample SAM Template for dynamodb-crud-app
+  
+Resources:
+  EmployeeTable:
+    Type: AWS::DynamoDB::Table
+    Properties: 
+      TableName: Employee
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions: 
+        - AttributeName: empId
+          AttributeType: S
+      KeySchema: 
+        - AttributeName: empId
+          KeyType: HASH
+    DeletionPolicy: Delete
+
+Outputs:
+  EmployeeTableName:
+    Description: "Employee Table Name"
+    Value: !Ref EmployeeTable
+  
+
