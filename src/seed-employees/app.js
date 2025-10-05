@@ -10,7 +10,7 @@ exports.handler = async (event, context) => {
 
     for(let i=1; i<=100; i++) {
         const employee = {
-            id: {S: `emp-${i}`},
+            empId: {S: `emp-${i}`},
             name: {S: `Employee ${i}`},
         };
 
@@ -25,10 +25,9 @@ exports.handler = async (event, context) => {
         } catch (error) {
             console.error(`Error inserting ${employee.id.S}: `, error);
         }
-
-        return {
-            statusCode: 200,
-            body: JSON.stringify({ message: "Employees seeded successfully" }),
-        };
     }
+    return {
+        statusCode: 200,
+        body: JSON.stringify({ message: "Employees seeded successfully" }),
+    };
 };
